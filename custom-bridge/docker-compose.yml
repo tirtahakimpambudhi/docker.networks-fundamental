@@ -1,0 +1,27 @@
+services:
+  custombrige-container1:
+    container_name: cb_ct1
+    image: nginx:alpine
+    networks:
+      custom-bridge:
+        ipv4_address: 192.168.100.2
+    ports:
+      - 8084:80
+
+  custombrige-container2:
+    container_name: cb_ct2
+    image: nginx:alpine
+    networks:
+      custom-bridge:
+        ipv4_address: 192.168.100.3
+    ports:
+      - 8085:80
+
+
+networks:
+  custom-bridge:
+    driver: bridge
+    ipam:
+      config:
+        - gateway: 192.168.100.1
+          subnet: 192.168.100.0/29
