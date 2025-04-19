@@ -1,0 +1,7 @@
+services:
+  host-container1:
+    container_name: host-ct1 
+    image: bitnami/nginx
+    network_mode: host
+    environment:
+      - NGINX_HTTP_PORT_NUMBER=8086
