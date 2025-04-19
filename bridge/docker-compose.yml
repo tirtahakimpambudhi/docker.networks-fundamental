@@ -1,0 +1,15 @@
+services:
+  container1:
+    container_name: container1
+    image: nginx:alpine
+    network_mode: bridge
+    ports:
+      - 8081:80
+    
+  container2:
+    container_name: container2
+    network_mode: bridge
+    image: nginx:alpine
+    ports:
+      - 8082:80
+    
