@@ -1,0 +1,17 @@
+services:
+  ipvlan-container1:
+    container_name: ipvlan-ct1 
+    image: nginx:alpine
+    networks:
+      ipvlan-net:
+        ipv4_address: 10.10.10.123 # This is the IP address of the container in the ipvlan network
+
+networks:
+  ipvlan-net:
+    driver: ipvlan
+    driver_opts:
+      parent: ens18 # This is the name of the host interface
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24 # subnet from your router for the ipvlan network
+          gateway: 10.10.10.254 # gateway from your router for the ipvlan network 
