@@ -88,35 +88,99 @@ docker-compose -f host/docker-compose.yml up -d
 
 ---
 
-### 4. 🚫 None Network
+Oke! Ini aku tambahkan penjelasan untuk **Macvlan**, **IPvlan L2**, **IPvlan L3**, dan update **None** (supaya fotonya konsisten pakai `networks.png` untuk bagian IPvlan dan None), tetap mengikuti style yang kamu pakai.
 
-The `none` network driver disables all networking for a container.
+---
+
+### 4. 🐧 Macvlan Network
+
+The `macvlan` network driver assigns a **unique MAC address** to each container, making it appear as a **physical device** on the network.
 
 **Characteristics:**
-- The container has **no network interface** except the loopback device.
-- Useful for **isolated jobs** that do not require any networking.
+- Containers are directly accessible from the external network, **just like real physical devices**.
+- Each container gets its **own IP address** from the physical network.
+- **No NAT**; containers can talk directly to other devices on the LAN.
+- Requires configuration of the **parent interface** to enable promiscous.
+
+📷 Illustration:  
+![Macvlan Network](./macvlan/macvlan-network.png)
 
 🛠️ Example:
 ```bash
-docker compose -f none/docker-compose.yml up -d 
-# No internet access
+docker-compose -f macvlan/docker-compose.yml up -d
 ```
 
 ---
 
-## 🎯 Learning Goals
+### 5. 🌐 IPvlan L2 (Layer 2 Mode)
 
-- Understand different **Docker network drivers**.
-- Practice setting up **docker-compose** files with various networking modes.
-- Learn the differences between **Bridge**, **Custom Bridge**, **Host**, and **None** modes.
-- Interpret **network diagrams** related to container communications.
+The `ipvlan` L2 mode behaves similar to `macvlan`, but instead of each container having a unique MAC address, **all containers share the same MAC address** (the host’s MAC).
+
+**Characteristics:**
+- Containers communicate over the physical network at Layer 2 (Ethernet).
+- Containers are assigned individual **IP addresses** from the LAN network.
+- **No MAC flooding** like in `macvlan`, making it more scalable for large networks.
+
+📷 Illustration:  
+![IPvlan Network](./networks.png)
+
+🛠️ Example:
+```bash
+docker-compose -f ipvlan.L2/docker-compose.yml up -d
+```
+
+---
+
+### 6. 🛰️ IPvlan L3 (Layer 3 Mode)
+
+In IPvlan L3 mode, containers communicate **via IP routing** rather than Layer 2 bridging.
+
+**Characteristics:**
+- Containers are assigned IP addresses from a **different subnet**.
+- Containers must route their traffic **through the host** (which acts like a basic router).
+- Ideal for isolating container networks and controlling routing more explicitly.
+- Static routes or NAT on the host are often needed for internet access.
+
+📷 Illustration:  
+![IPvlan Network](./networks.png)
+
+🛠️ Example:
+```bash
+docker-compose -f ipvlan.L3/docker-compose.yml up -d
+```
+
+---
+
+### 7. 🚫 None Network 
+The `none` network driver **completely disables networking** for a container.
+
+**Characteristics:**
+- The container has **only the loopback interface** (`lo`).
+- Useful for highly secure and isolated workloads.
+- **No external network communication** possible unless manually configured.
+
+📷 Illustration:  
+![None and IPvlan Networks](./networks.png)
+
+🛠️ Example:
+```bash
+docker-compose -f none/docker-compose.yml up -d
+```
+
+---
+
+## 🎯 Updated Learning Goals
+
+- Understand advanced network drivers like **Macvlan** and **IPvlan**.
+- Practice setting up Docker networks that connect containers **directly to physical networks** or **through routing**.
+- Recognize when to use **Layer 2** vs **Layer 3** container networking.
+- Visualize container communication using **network diagrams**.
 
 ---
 
 ## 🚀 Future Learning (Optional)
 
 After mastering these fundamentals, you can explore:
-- **Macvlan** networks (directly connect containers to physical network).
 - **Overlay** networks (for Docker Swarm and multi-host communication).
 
 ---
