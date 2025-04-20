@@ -1,0 +1,20 @@
+services:
+  macvlan-container1:
+    container_name: macvlan-ct1 
+    image: nginx:alpine
+    networks:
+      macvlan-net:
+        ipv4_address: 10.10.10.117
+
+networks:
+  macvlan-net:
+    driver: macvlan
+    driver_opts:
+      parent: macvlan-host # This is the name of the host interface
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24 # subnet from your router for the macvlan network
+          gateway: 10.10.10.254 # gateway from your router for the macvlan network
+          
+
+    
