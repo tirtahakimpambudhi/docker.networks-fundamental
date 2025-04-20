@@ -1,0 +1,5 @@
+services:
+  none-container1:
+    container_name: none-ct1 
+    image: nginx:alpine
+    network_mode: "none" # This is the network mode for the container
