@@ -1,0 +1,20 @@
+services:
+  ipvlan-container1:
+    container_name: ipvlan-ct1 
+    image: nginx:alpine
+    networks:
+      ipvlan-net:
+        ipv4_address: 192.168.1.2
+  
+
+networks:
+  ipvlan-net:
+    driver: ipvlan
+    internal: true
+    driver_opts:
+      ipvlan_mode: l3
+      parent: ens18 # This is the name of the host interface
+    ipam:
+      config:
+      - subnet: 192.168.1.0/24
+        ip_range: 192.168.1.0/26
