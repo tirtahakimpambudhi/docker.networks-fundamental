@@ -88,10 +88,6 @@ docker-compose -f host/docker-compose.yml up -d
 
 ---
 
-Oke! Ini aku tambahkan penjelasan untuk **Macvlan**, **IPvlan L2**, **IPvlan L3**, dan update **None** (supaya fotonya konsisten pakai `networks.png` untuk bagian IPvlan dan None), tetap mengikuti style yang kamu pakai.
-
----
-
 ### 4. 🐧 Macvlan Network
 
 The `macvlan` network driver assigns a **unique MAC address** to each container, making it appear as a **physical device** on the network.
