@@ -99,7 +99,7 @@ The `macvlan` network driver assigns a **unique MAC address** to each container,
 - Requires configuration of the **parent interface** to enable promiscous.
 
 📷 Illustration:  
-![Macvlan Network](./macvlan/macvlan-network.png)
+![Macvlan Network](./networks.png)
 
 🛠️ Example:
 ```bash
